@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODS - O Jogo de Cartas</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<div id="s-start" class="screen active">
+  <main class="intro">
+    <section class="brand">
+      <div class="logo-balls" aria-hidden="true">
+        <div class="lball v">🌱</div>
+        <div class="lball a">💧</div>
+        <div class="lball y">☀️</div>
+        <div class="lball r">📚</div>
+      </div>
+      <h1 class="logo-name">ODS</h1>
+      <p class="logo-sub">Um jogo de cartas inspirado em UNO para aprender os Objetivos de Desenvolvimento Sustentável enquanto compete contra dois bots.</p>
+      <button class="btn-main" onclick="initGame()">🌍 Começar partida</button>
+    </section>
+
+    <section class="rules-panel" aria-label="Como jogar">
+      <h2 class="rules-title">Como jogar</h2>
+      <div class="rules-grid">
+        <article class="rule">
+          <div class="rule-ico">🎨</div>
+          <h3>Combine cartas</h3>
+          <p>Jogue uma carta da mesma cor, do mesmo número ou do mesmo tipo da carta no descarte.</p>
+        </article>
+        <article class="rule">
+          <div class="rule-ico">⚡</div>
+          <h3>Use ações</h3>
+          <p>Bloqueio pula a vez, Inverter troca o sentido, +2 e +4 fazem o próximo jogador comprar cartas.</p>
+        </article>
+        <article class="rule">
+          <div class="rule-ico">🌈</div>
+          <h3>Mude a cor</h3>
+          <p>Cartas multicoloridas deixam você escolher a próxima cor da mesa.</p>
+        </article>
+        <article class="rule">
+          <div class="rule-ico">🌍</div>
+          <h3>Grite ODS</h3>
+          <p>Quando ficar com uma carta, toque em ODS. O primeiro sem cartas vence a rodada.</p>
+        </article>
+      </div>
+      <div class="card-preview" aria-hidden="true">
+        <div class="c c-verde"><div class="coval"></div><span class="cc tl">7</span><span class="cbrand">Reciclagem</span><span class="ctheme">♻️</span><div class="cv">7</div><span class="cc br">7</span><span class="cmini">♻️</span><span class="ctag">ODS 12</span></div>
+        <div class="c c-azul"><div class="coval"></div><span class="cc tl">+2</span><span class="cbrand">Água</span><span class="ctheme">🌊</span><div class="cv sp">+2</div><span class="cc br">+2</span><span class="cmini">💧</span><span class="ctag">ODS 6</span></div>
+        <div class="c c-wild"><div class="coval"></div><span class="cc tl">🌍</span><div class="cv w">🌍</div><span class="cc br">🌍</span><span class="cmini">🌈</span><span class="ctag">Agenda 2030</span></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="s-game" class="screen">
+  <div class="game-wrap">
+    <header class="hud">
+      <div class="bot-box" id="bot1-box">
+        <span class="bot-label" id="bot1-lbl">Bot Recicla</span>
+        <div class="bot-hand" id="bot1-hand"></div>
+        <span class="bot-count" id="bot1-cnt">7 cartas</span>
+      </div>
+
+      <div class="table-status">
+        <div class="turn-txt" id="turn-txt">Sua vez</div>
+        <div class="color-chip"><span class="color-dot" id="cdot"></span><span id="color-name">Verde</span></div>
+        <div class="direction-txt" id="dir-txt">▶ Horário</div>
+      </div>
+
+      <div class="bot-box" id="bot2-box">
+        <span class="bot-label" id="bot2-lbl">Bot Planta</span>
+        <div class="bot-hand" id="bot2-hand"></div>
+        <span class="bot-count" id="bot2-cnt">7 cartas</span>
+      </div>
+    </header>
+
+    <main class="center-row">
+      <div class="ods-board">
+        <div class="ods-board-head">
+          <span class="ods-mark">ODS</span>
+          <span class="goal-pill">Agenda 2030</span>
+        </div>
+        <div class="ods-goals" aria-hidden="true">
+          <div class="ods-goal g1" data-cor="verde"><strong>♻️ ODS 12</strong><span>Reciclagem</span></div>
+          <div class="ods-goal g2" data-cor="azul"><strong>💧 ODS 6</strong><span>Água limpa</span></div>
+          <div class="ods-goal g3" data-cor="amarelo"><strong>☀️ ODS 7</strong><span>Energia solar</span></div>
+          <div class="ods-goal g4" data-cor="vermelho"><strong>📚 ODS 4</strong><span>Educação</span></div>
+        </div>
+        <div class="table-core">
+          <div class="pile-wrap">
+            <span class="pile-lbl">Comprar</span>
+            <div class="draw-slot" onclick="humanDraw()" id="draw-slot" title="Comprar uma carta">
+              <div class="c c-bk" style="pointer-events:none"></div>
+            </div>
+            <span class="deck-count" id="deck-cnt">0 cartas</span>
+          </div>
+
+          <div class="ods-center">
+            <div class="ods-seal"><div class="ods-seal-inner" id="ods-seal-icon">🌍</div></div>
+            <div class="current-goal" id="goal-name">Objetivos de Desenvolvimento Sustentável</div>
+          </div>
+
+          <div class="pile-wrap">
+            <span class="pile-lbl">Descarte</span>
+            <div class="discard-slot" id="discard-slot"></div>
+          </div>
+        </div>
+        <div class="status-txt" id="status-txt"></div>
+      </div>
+    </main>
+
+    <section class="player-row">
+      <div class="player-chip" id="player-box">
+        <span class="player-label" id="player-lbl">Você</span>
+      </div>
+      <div class="player-hand" id="player-hand"></div>
+    </section>
+  </div>
+  <button id="ods-btn" onclick="callODS()">ODS! 🌍</button>
+  <button id="help-btn" onclick="openHelp()" title="Ajuda das cartas">?</button>
+</div>
+
+<div id="s-win" class="screen">
+  <div>
+    <div class="win-ico" id="win-ico">🏆</div>
+    <h2 class="win-h" id="win-h">Você venceu!</h2>
+    <p class="win-sub" id="win-sub">Parabéns por jogar pelo planeta.</p>
+    <div class="fact-box">
+      <h3>Curiosidade ODS</h3>
+      <p id="win-fact"></p>
+    </div>
+    <button class="btn-main" onclick="goStart()">Jogar novamente</button>
+  </div>
+</div>
+
+<div id="m-color" class="overlay">
+  <div class="mbox">
+    <div class="mico">🌈</div>
+    <div class="mtitle">Escolha uma cor</div>
+    <div class="mmsg">Defina a próxima cor da mesa.</div>
+    <div class="cpgrid">
+      <button class="cpbtn v" onclick="pickColor('verde')">🌱 Verde</button>
+      <button class="cpbtn a" onclick="pickColor('azul')">💧 Azul</button>
+      <button class="cpbtn y" onclick="pickColor('amarelo')">☀️ Amarelo</button>
+      <button class="cpbtn r" onclick="pickColor('vermelho')">📚 Vermelho</button>
+    </div>
+  </div>
+</div>
+
+<div id="m-msg" class="overlay">
+  <div class="mbox">
+    <div class="mico" id="mi"></div>
+    <div class="mtitle" id="mt"></div>
+    <div class="mmsg" id="mb"></div>
+    <div class="mfact" id="mf"></div>
+    <div class="mods" id="mo"></div>
+    <button class="btn-ok" onclick="closeMsg()">Entendi</button>
+  </div>
+</div>
+
+<div id="m-help" class="overlay">
+  <div class="mbox">
+    <div class="mico">?</div>
+    <div class="mtitle">Cartas especiais</div>
+    <div class="mmsg">Use essas cartas para mudar o ritmo da rodada e atrapalhar os bots.</div>
+    <div class="help-list">
+      <article class="help-card">
+        <div class="help-symbol">🚫</div>
+        <div><h3>Bloqueio</h3><p>Pula a vez do próximo jogador.</p></div>
+      </article>
+      <article class="help-card">
+        <div class="help-symbol">🔄</div>
+        <div><h3>Inverter</h3><p>Troca o sentido da rodada: horário vira anti-horário e vice-versa.</p></div>
+      </article>
+      <article class="help-card">
+        <div class="help-symbol">+2</div>
+        <div><h3>Compre +2</h3><p>O próximo jogador compra duas cartas e perde a vez.</p></div>
+      </article>
+      <article class="help-card">
+        <div class="help-symbol">🌍</div>
+        <div><h3>Multicor</h3><p>Você escolhe a próxima cor da mesa.</p></div>
+      </article>
+      <article class="help-card">
+        <div class="help-symbol">+4</div>
+        <div><h3>Compre +4</h3><p>Você escolhe a cor, o próximo jogador compra quatro cartas e perde a vez.</p></div>
+      </article>
+    </div>
+    <button class="btn-ok" onclick="closeHelp()">Fechar</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-t" id="toast-t"></div>
+  <div class="toast-b" id="toast-b"></div>
+</div>
+<script src="assets/js/game.js"></script>
+</body>
+</html>
