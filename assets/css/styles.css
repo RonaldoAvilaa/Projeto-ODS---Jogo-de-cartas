@@ -188,6 +188,128 @@ button{font-family:inherit}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast-t{font-size:.88rem;font-weight:900}.toast-b{font-size:.76rem;color:#a7d7b7}
 
+/* DESKTOP COMPACTO PARA TELAS BAIXAS */
+@media (max-height:700px) and (min-width:761px){
+  .game-wrap{
+    height:100dvh;
+    padding:4px 14px;
+    gap:6px;
+    grid-template-rows:108px 1fr 136px;
+  }
+
+  .hud{
+    gap:10px;
+    align-items:start;
+  }
+
+  .bot-box{
+    padding:8px 10px;
+  }
+
+  .bot-hand{
+    min-height:40px;
+    margin-top:5px;
+  }
+
+  .bot-hand .c{
+    margin-right:-18px;
+  }
+
+  .table-status{
+    padding:7px 12px;
+    gap:4px;
+  }
+
+  .turn-txt{
+    font-size:1.05rem;
+  }
+
+  .center-row{
+    min-height:0;
+    align-items:center;
+  }
+
+  .ods-board{
+    min-height:0;
+    padding:10px 14px;
+    border-radius:18px;
+  }
+
+  .ods-board-head{
+    margin-bottom:6px;
+  }
+
+  .ods-mark{
+    width:36px;
+    height:36px;
+  }
+
+  .goal-pill{
+    padding:5px 10px;
+  }
+
+  .ods-goals{
+    gap:8px;
+    margin-bottom:8px;
+  }
+
+  .ods-goal{
+    min-height:48px;
+    padding:7px 9px;
+  }
+
+  .table-core{
+    gap:14px;
+  }
+
+  .pile-wrap{
+    padding:8px 10px;
+  }
+
+  .ods-seal{
+    width:86px;
+    height:86px;
+  }
+
+  .ods-seal-inner{
+    width:60px;
+    height:60px;
+    font-size:1.35rem;
+  }
+
+  .status-txt{
+    margin-top:8px;
+    padding:6px 12px;
+  }
+
+  .player-row{
+    position:relative;
+    gap:0;
+    align-content:end;
+  }
+
+  .player-chip{
+    position:absolute;
+    left:14px;
+    top:-48px;
+    margin:0;
+    z-index:220;
+  }
+
+  .player-hand{
+    height:132px;
+    min-height:0;
+    padding:9px 10px;
+    align-items:center;
+    overflow-x:auto;
+    overflow-y:hidden;
+  }
+
+  #ods-btn{
+    bottom:132px;
+  }
+}
+
 @media (max-width:760px){
   html,body{overflow:auto}
   .screen{min-height:100dvh}
