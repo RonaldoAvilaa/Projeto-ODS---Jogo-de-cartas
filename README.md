@@ -54,7 +54,6 @@ O projeto foi desenvolvido como uma aplicação web estática, sem necessidade d
 ## 📁 Estrutura do projeto
 
 ```txt
-ods-environment-day-playing-cards/
 ├── assets/
 │   ├── css/
 │   │   └── styles.css
